@@ -1,0 +1,9 @@
+{"namespace": "com.example.manningenergyresourcesspring",
+  "type": "record",
+  "name": "DeviceEvent",
+  "fields": [
+    {"name": "charging", "type": "int"},
+    {"name": "regionId",  "type": "int"},
+    {"name": "deviceId", "type": "int"}
+  ]
+}
