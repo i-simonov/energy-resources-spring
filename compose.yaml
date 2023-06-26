@@ -1,12 +1,12 @@
 services:
-  mysql:
-    image: 'mysql:latest'
-    environment:
-      - 'MYSQL_DATABASE=mysql'
-      - 'MYSQL_ROOT_PASSWORD=secret-pw'
-    container_name: 'manning-mysql'
-    ports:
-      - '58338:3306'
+#  mysql:
+#    image: 'mysql:latest'
+#    environment:
+#      - 'MYSQL_DATABASE=mysql'
+#      - 'MYSQL_ROOT_PASSWORD=secret-pw'
+#    container_name: 'manning-mysql'
+#    ports:
+#      - '58338:3306'
   postgres:
     image: 'postgres:latest'
     environment:
