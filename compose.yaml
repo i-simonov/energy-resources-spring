@@ -6,7 +6,7 @@ services:
       - 'MYSQL_ROOT_PASSWORD=secret-pw'
     container_name: 'manning-mysql'
     ports:
-      - '3306'
+      - '58338:3306'
   postgres:
     image: 'postgres:latest'
     environment:
@@ -15,7 +15,7 @@ services:
       - 'POSTGRES_USER=postgres'
     container_name: 'manning-postgres'
     ports:
-      - '5432'
+      - '58337:5432'
   broker:
     image: confluentinc/cp-kafka:7.4.0
     hostname: broker

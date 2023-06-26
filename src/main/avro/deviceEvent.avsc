@@ -1,6 +1,6 @@
-{"namespace": "com.example.manningenergyresourcesspring",
+{"namespace": "com.example.manningenergyresourcesspring.service",
   "type": "record",
-  "name": "DeviceEvent",
+  "name": "DeviceEventAvroService",
   "fields": [
     {"name": "charging", "type": "int"},
     {"name": "regionId",  "type": "int"},

@@ -1,4 +1,4 @@
-package com.example.manningenergyresourcesspring;
+package com.energyresourcesspring.config;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +12,7 @@ public class KafkaTopicConfig {
         return TopicBuilder.name("devicesEvents")
 //                .partitions(1)
 //                .compact()
+                .config("retention.ms", "10000")
                 .build();
     }
 }
