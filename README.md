@@ -1,44 +1,41 @@
-# EnergyResourcesSpring
+# Energy Resources Spring Application
 
-EnergyResourcesSpring is a Spring Boot application designed for managing IoT devices data through Kafka Streams. It uses Apache Avro for serialization and deserialization.
+This project is a Java Spring Boot application that uses Apache Kafka for the handling of device events and storing their states. The project is composed of several modules which are detailed below:
 
-## Key Features
-
-1. **DeviceEventAvroService** - A service for managing device events, based on the Avro schema.
-2. **Kafka Consumer and Producer configurations** - Configurations for consuming and producing messages from/to Kafka.
-3. **Kafka Stream configuration** - Configuration for managing Kafka Streams.
-4. **DeviceEventsEndpoint** - Endpoint for publishing device events to the Kafka topic.
-5. **DeviceStateEndpoint** - Endpoint for getting the current state of the device.
-6. **DeviceStateRepository** - A JPA repository for managing the device states in the database.
-7. **DeviceStateService** - A service for managing device states.
-8. **KafkaConsumerService** - A service for consuming device events from Kafka.
-9. **KafkaDeviceEventsStreamListenerService** - A service for consuming device events from Kafka streams.
-
-## How to Run
-
-1. Clone the project.
-2. Navigate to the project directory.
-3. Run `mvn spring-boot:run`.
 
 ## Project Structure
 
-This project mainly consists of following packages:
+The project is structured into the following key components:
 
-- `com.example.manningenergyresourcesspring.service` - Contains service interfaces and their implementations.
-- `com.energyresourcesspring.config` - Contains all the configurations including Kafka Producer and Consumer configurations.
-- `com.energyresourcesspring.controller` - Contains the REST controllers for handling device events and states.
-- `com.energyresourcesspring.model` - Contains the DeviceState entity.
-- `com.energyresourcesspring.repository` - Contains the JPA repository.
-- `com.energyresourcesspring.service.impl` - Contains the service implementations.
-- `com.energyresourcesspring.service` - Contains the service interfaces.
+- **Controllers**: This is where the REST endpoints are defined. For this application, we have two controllers:
+    - `DeviceEventsEndpoint`: Handles the POST requests to publish device events to a Kafka topic.
+    - `DeviceStateEndpoint`: Handles the GET requests to fetch the state of a specific device.
+
+- **Models**: Defines the `DeviceState` model which represents the state of a device.
+
+- **Repositories**: Contains the `DeviceStateRepository` that extends `JpaRepository` for database operations related to the device state.
+
+- **Services**: This is where the core business logic of the application resides. It contains:
+    - `DeviceStateService`: Service for saving and loading the device state.
+    - `RawRecordAvroService`: Service for handling Avro formatted Kafka messages.
+    - `KafkaDeviceEventsStreamListenerService`: Service for consuming Kafka messages and transforming them.
+    - `RawToJSONParser`: Service for parsing raw Avro data into JSON format.
+    - `RawToCanonicalMapper`: Service for mapping raw data to canonical format.
+    - `SchemaRegistryService`: Service for registering Avro schemas with the Schema Registry.
+
+- **EnergyResourcesSpringApplication**: This is the main application class that bootstraps the Spring application.
 
 ## Application Workflow
 
-1. A new device event is published via the `/api/v1/deviceEvents/{device_id}` endpoint, where `{device_id}` is the unique identifier of the device. This event message is published to the Kafka topic `devicesEvents`.
-2. The Kafka Consumer and Stream Listener services listen to the `devicesEvents` topic for any incoming device events.
-3. When a device event is received, it is deserialized using the Avro schema and the device's state is updated accordingly.
-4. The updated state of the device can be fetched using the `/api/v1/deviceState/{device_id}` endpoint, where `{device_id}` is the unique identifier of the device.
+This application works in the following way:
 
+1. A device event is sent to the "devicesEvents" Kafka topic.
+2. `KafkaDeviceEventsStreamListenerService` consumes the device event from the "devicesEvents" topic.
+3. The event data is transformed from raw format to JSON using `RawToJSONParser`.
+4. The JSON event is then transformed into a canonical format using `RawToCanonicalMapper`.
+5. The canonical event is published to the "devicesCanonicalEvents" Kafka topic.
+6. Another stream within `KafkaDeviceEventsStreamListenerService` consumes the canonical event from the "devicesCanonicalEvents" topic.
+7. If the event contains a "charging" key, the application updates the device's state in the database using `DeviceStateService`.
 
 ## Usage
 

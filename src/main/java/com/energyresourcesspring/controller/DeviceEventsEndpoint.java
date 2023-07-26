@@ -1,25 +1,37 @@
 package com.energyresourcesspring.controller;
 
+import com.energyresourcesspring.service.generated.RawRecordAvroService;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+
+import static java.lang.System.currentTimeMillis;
 
 @RestController
 @RequestMapping("api/v1/deviceEvents/{device_id}")
 public class DeviceEventsEndpoint {
 
-    private KafkaTemplate<String, String> kafkaTemplate;
+    private KafkaTemplate<String, RawRecordAvroService> kafkaTemplate;
 
-    public DeviceEventsEndpoint(KafkaTemplate<String, String> kafkaTemplate) {
+    public DeviceEventsEndpoint(KafkaTemplate<String, RawRecordAvroService> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
     @PostMapping
-    public void publish(@PathVariable("device_id") String device_id, @RequestBody String messageBody) throws IOException {
+    public void publish(@PathVariable("device_id") String device_id, @RequestBody String messageBody) {
 
-        kafkaTemplate.send("devicesEvents", device_id, messageBody);
+        RawRecordAvroService rawMessage = new RawRecordAvroService();
+
+        rawMessage.setArrivalTimeMs(currentTimeMillis());
+        rawMessage.setUuid(device_id);
+        rawMessage.setBody(str_to_bb(messageBody,Charset.forName("UTF-8")));
+
+        kafkaTemplate.send("devicesEvents", device_id, rawMessage);
 
     }
-
+    public static ByteBuffer str_to_bb(String msg, Charset charset){
+        return ByteBuffer.wrap(msg.getBytes(charset));
+    }
 }

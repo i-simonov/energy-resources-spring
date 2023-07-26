@@ -1,6 +1,5 @@
 package com.energyresourcesspring.service.impl;
 
-import com.energyresourcesspring.service.DeviceEventAvroService;
 import com.energyresourcesspring.service.DeviceStateService;
 import com.energyresourcesspring.model.DeviceState;
 import com.energyresourcesspring.repository.DeviceStateRepository;
@@ -18,11 +17,11 @@ public class DeviceStateServiceImpl implements DeviceStateService {
 
 
     @Override
-    public DeviceState saveDeviceState(String uuid, DeviceEventAvroService deviceEvent) {
+    public DeviceState saveDeviceState(String uuid, boolean state) {
 
         DeviceState deviceState = new DeviceState();
         deviceState.setUuid(uuid);
-        deviceState.setState(deviceEvent.getCharging()>0);
+        deviceState.setState(state);
 
         return deviceStateRepository.save(deviceState);
 

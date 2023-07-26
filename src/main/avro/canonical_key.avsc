@@ -1,0 +1,11 @@
+{
+  "namespace": "com.energyresourcesspring.service.generated",
+  "type": "record",
+  "name": "CanonicalKeyService",
+  "fields": [
+    {
+      "name": "uuid",
+      "type": ["null", "string"]
+    }
+  ]
+}

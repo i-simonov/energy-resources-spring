@@ -1,0 +1,11 @@
+{
+  "namespace": "com.energyresourcesspring.service.generated",
+  "type": "record",
+  "name": "RawRecordAvroService",
+  "fields": [
+    {"name": "uuid", "type": "string"},
+    {"name": "arrival_time_ms", "type": ["long", "null"]},
+    {"name": "body", "type": ["bytes","null"]}
+
+    ]
+}

@@ -1,0 +1,26 @@
+{
+  "namespace": "com.energyresourcesspring.service.generated",
+  "type": "record",
+  "name": "CanonicalValueService",
+  "fields": [
+    {"name": "uuid", "type": "string"},
+    {"name": "arrival_time_ms", "type": ["long", "null"]},
+    {
+      "name": "event_time_ms",
+      "type": ["null", "long"]
+    },
+    {
+      "name": "events",
+      "type": [ "null",
+        {
+          "type": "map",
+          "values": "string"
+        }
+      ]
+    },
+    {
+      "name": "regionId",
+      "type": ["null", "long"]
+    }
+    ]
+}

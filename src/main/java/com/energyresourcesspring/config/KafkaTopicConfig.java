@@ -8,11 +8,18 @@ import org.springframework.kafka.config.TopicBuilder;
 @Configuration
 public class KafkaTopicConfig {
     @Bean
-    public NewTopic exampleTopic(){
+    public NewTopic devicesEventsTopic(){
         return TopicBuilder.name("devicesEvents")
 //                .partitions(1)
 //                .compact()
                 .config("retention.ms", "10000")
+                .build();
+    }
+    @Bean
+    public NewTopic canonicalTopic(){
+        return TopicBuilder.name("devicesEventsCanonical")
+//                .partitions(1)
+//                .compact()
                 .build();
     }
 }

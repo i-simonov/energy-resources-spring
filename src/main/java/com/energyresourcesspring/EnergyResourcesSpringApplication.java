@@ -1,7 +1,11 @@
 package com.energyresourcesspring;
 
+import com.energyresourcesspring.service.SchemaRegistryService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+
+import java.io.IOException;
 
 @SpringBootApplication
 public class EnergyResourcesSpringApplication {
@@ -25,5 +29,11 @@ public class EnergyResourcesSpringApplication {
 //                kafkaTemplate.send("devicesEvents", i.toString());
 //            }};
 //    }
+    @Bean
+    public static void schemaRegistryRegistrator() throws IOException {
 
+        SchemaRegistryService.registerSchema("devicesEvents", "src/main/avro/raw_record.avsc");
+        SchemaRegistryService.registerSchema("devicesCanonicalEvents", "src/main/avro/canonical_value.avsc");
+
+    }
 }
