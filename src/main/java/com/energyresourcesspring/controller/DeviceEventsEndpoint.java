@@ -31,7 +31,7 @@ public class DeviceEventsEndpoint {
         kafkaTemplate.send("devicesEvents", device_id, rawMessage);
 
     }
-    public static ByteBuffer str_to_bb(String msg, Charset charset){
+    private static ByteBuffer str_to_bb(String msg, Charset charset){
         return ByteBuffer.wrap(msg.getBytes(charset));
     }
 }
