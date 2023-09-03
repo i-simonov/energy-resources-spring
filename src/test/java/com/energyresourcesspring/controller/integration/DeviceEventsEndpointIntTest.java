@@ -1,24 +1,14 @@
-package com.energyresourcesspring.unit;
+package com.energyresourcesspring.controller.integration;
 
-import com.energyresourcesspring.EnergyResourcesSpringApplication;
-import com.energyresourcesspring.controller.DeviceStateEndpoint;
-import com.energyresourcesspring.service.DeviceStateService;
-import com.energyresourcesspring.service.KafkaDeviceEventsStreamListenerService;
+import com.energyresourcesspring.controller.DeviceEventsEndpoint;
 import com.energyresourcesspring.service.generated.RawRecordAvroService;
-import com.energyresourcesspring.service.impl.DeviceStateServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.FilterType;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -31,8 +21,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @AutoConfigureMockMvc
-@SpringBootTest
-public class DeviceEventsEndpointTest {
+@WebMvcTest(DeviceEventsEndpoint.class)
+public class DeviceEventsEndpointIntTest {
 
     @Autowired
     private MockMvc mockMvc;
