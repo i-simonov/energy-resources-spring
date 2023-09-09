@@ -29,7 +29,7 @@ public class RawToCanonicalMapper implements KeyValueMapper<String, Map<String, 
         Stream<Map.Entry<String, Object>> stream = event.entrySet().stream();
         Map events = new HashMap<CharSequence, CharSequence>();
 
-        stream.filter(stringObjectEntry -> stringObjectEntry.getKey()!="arrival_time_ms")
+        stream.filter(stringObjectEntry -> !stringObjectEntry.getKey().equals("arrival_time_ms"))
                 .forEach(k->events.put(k.getKey().toString(),k.getValue().toString()));
 
         valueBuilder.setEvents(events);
